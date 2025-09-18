@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Voyago - Holiday Planner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      // Custom configuration for Tailwind CSS to match the design
+      tailwind.config = {
+        theme: {
+          extend: {
+            // Custom breakpoints for screens
+            screens: {
+              // Default small and medium breakpoints
+              sm: "640px",
+              md: "768px",
+
+              // Redefine the 'lg' breakpoint to 1280px.
+              // This means any class with an 'lg:' prefix will now activate
+              // at 1280px instead of the default 1024px.
+              lg: "1280px",
+
+              // Keep default larger breakpoints
+              // 'xl': '1280px',
+              // '2xl': '1536px',
+            },
+            fontFamily: {
+              shadowsLight: ["Shadows Into Light", "sans-serif"],
+              outfit: ["Outfit", "sans-serif"],
+            },
+            colors: {
+              "brand-dark": "#302038",
+              "brand-primary": "#FF5956",
+              "brand-grey": "#F7F2EE"
+            },
+            backgroundImage: {
+              "hero-pattern": "url('./assets/images/HeroSection.jpg')",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Outfit", sans-serif;
+      }
+
+      /* Custom CSS for Animations */
+      @keyframes zoomIn {
+        from {
+          transform: scale(1);
+        }
+
+        to {
+          transform: scale(1.1);
+        }
+      }
+
+      .hero-bg-animate {
+        animation: zoomIn 10s ease-out infinite alternate;
+      }
+
+      @keyframes popUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .hero-text-animate {
+        /* Staggering the animation with delays */
+        animation: popUp 0.8s ease-out forwards;
+      }
+
+      .hero-text-animate p {
+        opacity: 0;
+        animation: popUp 0.8s ease-out 0.3s forwards;
+      }
+
+      .hero-text-animate h1 {
+        opacity: 0;
+        animation: popUp 0.8s ease-out 0.6s forwards;
+      }
+
+      .hero-form-animate {
+        opacity: 0;
+        animation: popUp 0.8s ease-out 0.9s forwards;
+      }
+
+      /* Smooth transition for background image change */
+      .hero-section {
+        transition: background-image 1s ease-in-out;
+      }
+    </style>
+  </head>
+
+  <body class="bg-gray-100">
+    <!-- The header element wraps both the top bar and the main navigation -->
+    <header class="absolute top-0 left-0 right-0 z-20">
+      <!-- Top contact bar -->
+      <!-- The parent is now a full-width flex container -->
+      <div class="hidden lg:flex w-full">
+        <!-- Dark section that grows to fill available space -->
+        <div
+          class="bg-brand-dark text-white flex-grow flex justify-between items-center pl-4 pr-6"
+        >
+          <!-- Left Side: Address & Email -->
+          <div class="flex items-center space-x-6 text-sm">
+            <div class="flex items-center space-x-2 py-3">
+              <i class="fas fa-map-marker-alt text-brand-primary"></i>
+              <span>30 Commercial Road Fratton, Australia</span>
+            </div>
+            <div class="flex items-center space-x-2 py-3">
+              <i class="fas fa-envelope text-brand-primary"></i>
+              <span>needhelp@company.com</span>
+            </div>
+          </div>
+
+          <!-- Right Side (within dark bar): Timings -->
+          <div class="flex items-center space-x-2 text-sm">
+            <i class="far fa-clock text-brand-primary"></i>
+            <span>Mon to Sat: 8.00 am - 7.00 pm</span>
+          </div>
+        </div>
+
+        <!-- Primary Color Section: Social Media -->
+        <div
+          class="bg-brand-primary text-white flex items-center space-x-6 px-6"
+        >
+          <a href="#" class="hover:opacity-80"
+            ><i class="fab fa-facebook-f"></i
+          ></a>
+          <a href="#" class="hover:opacity-80"
+            ><i class="fab fa-twitter"></i
+          ></a>
+          <a href="#" class="hover:opacity-80"
+            ><i class="fab fa-pinterest-p"></i
+          ></a>
+          <a href="#" class="hover:opacity-80"
+            ><i class="fab fa-instagram"></i
+          ></a>
+        </div>
+      </div>
+
+      <!-- Main navigation -->
+      <nav>
+        <!-- Desktop Navigation -->
+        <div class="hidden lg:flex w-full items-stretch">
+          <!-- White Section (Left): Logo, Links, Start Booking -->
+          <div
+            class="bg-white flex-grow flex items-center justify-between px-6 py-6"
+          >
+            <!-- Logo & Nav Links Group -->
+            <div class="flex items-center space-x-12">
+              <!-- Logo -->
+              <img
+                src="https://i.imgur.com/vJc25Vn.png"
+                alt="Voyago Logo"
+                class="h-12"
+              />
+
+              <!-- Desktop Menu Links -->
+              <div class="flex items-center space-x-8 text-gray-700">
+                <a href="#" class="hover:text-brand-primary">Demos</a>
+                <a href="#" class="hover:text-brand-primary">About</a>
+                <a href="#" class="hover:text-brand-primary">Destinations</a>
+                <a
+                  href="#"
+                  class="font-bold text-black border-b-2 border-brand-primary pb-1"
+                  >Tours</a
+                >
+                <a href="#" class="hover:text-brand-primary">Pages</a>
+                <a href="#" class="hover:text-brand-primary">Shop</a>
+                <a href="#" class="hover:text-brand-primary">Blog</a>
+                <a href="#" class="hover:text-brand-primary">Contact</a>
+              </div>
+            </div>
+
+            <!-- Start Booking Button -->
+            <button
+              class="bg-brand-grey text-gray-800 px-6 py-3 mx-5 rounded-md hover:bg-brand-primary hover:text-white font-semibold"
+            >
+              Start Booking
+            </button>
+          </div>
+
+          <!-- Primary Color Section (Right): Call, Icons -->
+          <div class="bg-brand-primary text-white flex items-center pr-6 py-6">
+            <!-- Call Section -->
+            <div class="flex items-center px-6 h-full border-r border-white/20">
+              <div class="mr-4">
+                <i class="fas fa-phone-alt text-2xl"></i>
+              </div>
+              <div>
+                <p class="text-xs font-light">Call Anytime</p>
+                <p class="font-bold">(303) 555-0105</p>
+              </div>
+            </div>
+            <!-- Icons Section -->
+            <div class="flex items-center space-x-4 px-4 h-full">
+              <i class="fas fa-search cursor-pointer"></i>
+              <i class="fas fa-user cursor-pointer"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- MOBILE NAVIGATION -->
+        <div class="lg:hidden bg-white">
+          <div
+            class="container mx-auto px-4 flex justify-between items-center py-4"
+          >
+            <!-- Logo -->
+            <img
+              src="./assets/images/voyagoLogo.png"
+              alt="Voyago Logo"
+              class="h-12"
+            />
+
+            <!-- Mobile Menu Button (Hamburger) -->
+            <button
+              id="open-menu-button"
+              class="text-gray-600 focus:outline-none"
+            >
+              <i class="fas fa-bars text-2xl"></i>
+            </button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Mobile Side-Drawer Menu with Vertical Scrollbar -->
+    <div
+      id="side-drawer"
+      class="fixed top-0 left-0 h-full w-80 max-w-full bg-brand-dark text-white z-50 transform -translate-x-full transition-transform duration-300 ease-in-out"
+    >
+      <!-- This div is now scrollable on the Y-axis if its content overflows -->
+      <div class="p-6 h-full overflow-y-auto">
+        <!-- Drawer Header -->
+        <div class="flex justify-between items-center mb-8">
+          <img
+            src="https://i.imgur.com/gCeE82v.png"
+            alt="Voyago Logo White"
+            class="h-10"
+          />
+          <button id="close-menu-button" class="focus:outline-none">
+            <i class="fas fa-times text-2xl"></i>
+          </button>
+        </div>
+
+        <!-- Navigation Links -->
+        <nav class="flex flex-col space-y-2">
+          <a
+            href="#"
+            class="flex justify-between items-center py-3 border-b border-gray-700"
+            ><span>Home</span>
+            <span class="bg-brand-primary px-2 py-1"
+              ><i class="fas fa-chevron-right text-xs"></i></span
+          ></a>
+          <a
+            href="#"
+            class="flex justify-between items-center py-3 border-b border-gray-700"
+            ><span>About</span>
+            <span class="bg-brand-primary px-2 py-1"
+              ><i class="fas fa-chevron-right text-xs"></i></span
+          ></a>
+          <a
+            href="#"
+            class="flex justify-between items-center py-3 border-b border-gray-700"
+            ><span>Destinations</span>
+            <span class="bg-brand-primary px-2 py-1"
+              ><i class="fas fa-chevron-right text-xs"></i></span
+          ></a>
+          <a
+            href="#"
+            class="flex justify-between items-center py-3 border-b border-gray-700"
+            ><span>Tours</span>
+            <span class="bg-brand-primary px-2 py-1"
+              ><i class="fas fa-chevron-right text-xs"></i></span
+          ></a>
+          <a
+            href="#"
+            class="flex justify-between items-center py-3 border-b border-gray-700"
+            ><span>Pages</span>
+            <span class="bg-brand-primary px-2 py-1"
+              ><i class="fas fa-chevron-right text-xs"></i></span
+          ></a>
+          <a
+            href="#"
+            class="flex justify-between items-center py-3 border-b border-gray-700"
+            ><span>Shop</span>
+            <span class="bg-brand-primary px-2 py-1"
+              ><i class="fas fa-chevron-right text-xs"></i></span
+          ></a>
+          <a
+            href="#"
+            class="flex justify-between items-center py-3 border-b border-gray-700"
+            ><span>Blog</span>
+            <span class="bg-brand-primary px-2 py-1"
+              ><i class="fas fa-chevron-right text-xs"></i></span
+          ></a>
+          <a href="#" class="flex justify-between items-center py-3"
+            ><span>Contact</span></a
+          >
+        </nav>
+
+        <!-- Contact Info -->
+        <div class="mt-12 space-y-4">
+          <div class="flex items-center space-x-3">
+            <i class="fas fa-envelope text-brand-primary text-xl"></i>
+            <span>needhelp@trevlo.com</span>
+          </div>
+          <div class="flex items-center space-x-3">
+            <i class="fas fa-phone-alt text-brand-primary text-xl"></i>
+            <span>(303) 555-0105</span>
+          </div>
+        </div>
+
+        <!-- Social Icons -->
+        <div class="flex space-x-6 mt-8 pb-4">
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-pinterest-p"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+    <!-- Overlay for Side-Drawer -->
+    <div
+      id="menu-overlay"
+      class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"
+    ></div>
+
+    <main>
+      <!-- The hero section with a container for the animated background -->
+      <section
+        id="hero"
+        class="hero-section relative h-screen overflow-hidden flex items-center justify-center text-white p-4"
+      >
+        <!-- The div below will have its background image changed by JavaScript -->
+        <div
+          id="hero-bg"
+          class="absolute inset-0 bg-cover bg-center hero-bg-animate"
+        ></div>
+        <div class="absolute inset-0 bg-black opacity-40"></div>
+
+        <div class="relative z-10 text-center">
+          <div class="hero-text-animate">
+            <p class="text-4xl font-light tracking-widest font-shadowsLight">
+              Beauty and Discovery
+            </p>
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold my-4">
+              Explore the World
+            </h1>
+          </div>
+
+          <!-- Booking Form -->
+          <div
+            class="hero-form-animate bg-white text-gray-600 rounded-lg p-4 flex flex-col md:flex-row items-center md:space-x-4 w-full max-w-4xl mx-auto mt-8"
+          >
+            <div class="w-full md:flex-1 mb-4 md:mb-0 text-left p-2">
+              <label for="location" class="block text-xs text-gray-500"
+                >Location</label
+              >
+              <input
+                type="text"
+                id="location"
+                placeholder="Where To Next?"
+                class="w-full border-none focus:ring-0 p-0 text-base font-semibold"
+              />
+            </div>
+            <div
+              class="w-full md:border-l md:border-gray-200 md:pl-4 md:flex-1 mb-4 md:mb-0 text-left p-2"
+            >
+              <label for="type" class="block text-xs text-gray-500">Type</label>
+              <select
+                id="type"
+                class="w-full border-none focus:ring-0 p-0 bg-white text-base font-semibold"
+              >
+                <option>Booking Type</option>
+                <option>Adventure</option>
+                <option>Relaxation</option>
+                <option>Cultural</option>
+              </select>
+            </div>
+            <div
+              class="w-full md:border-l md:border-gray-200 md:pl-4 md:flex-1 mb-4 md:mb-0 text-left p-2"
+            >
+              <label for="date" class="block text-xs text-gray-500"
+                >Date From</label
+              >
+              <input
+                type="date"
+                id="date"
+                class="w-full border-none focus:ring-0 p-0 text-base font-semibold"
+              />
+            </div>
+            <div
+              class="w-full md:border-l md:border-gray-200 md:pl-4 flex items-center justify-between mb-4 md:mb-0 p-2"
+            >
+              <div class="text-left">
+                <label for="guests" class="block text-xs text-gray-500"
+                  >Guests</label
+                >
+                <span id="guests" class="font-semibold text-base">2</span>
+              </div>
+              <div class="flex items-center space-x-2 ml-4">
+                <button
+                  class="bg-gray-200 w-6 h-6 rounded-full flex items-center justify-center"
+                >
+                  -
+                </button>
+                <button
+                  class="bg-gray-200 w-6 h-6 rounded-full flex items-center justify-center"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+            <button
+              class="bg-brand-primary text-white w-full md:w-auto px-6 py-6 rounded-lg hover:bg-red-600"
+            >
+              <i class="fas fa-search text-xl"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Slider Arrows -->
+        <button
+          class="group absolute left-4 top-1/2 transform -translate-y-1/2 p-3 rounded-full border-2 border-white/40 text-white hover:border-white hover:text-white transition hidden md:block"
+        >
+          <i
+            class="fas fa-arrow-left opacity-60 group-hover:opacity-100 transition"
+          ></i>
+        </button>
+
+        <button
+          class="group absolute right-4 top-1/2 transform -translate-y-1/2 p-3 rounded-full border-2 border-white/40 text-white hover:border-white hover:text-white transition hidden md:block"
+        >
+          <i
+            class="fas fa-arrow-right opacity-60 group-hover:opacity-100 transition"
+          ></i>
+        </button>
+      </section>
+    </main>
+
+    <script>
+      // Hero section image slideshow
+      document.addEventListener("DOMContentLoaded", function () {
+        // Mobile Menu Drawer Logic
+        const openMenuButton = document.getElementById("open-menu-button");
+        const closeMenuButton = document.getElementById("close-menu-button");
+        const sideDrawer = document.getElementById("side-drawer");
+        const menuOverlay = document.getElementById("menu-overlay");
+
+        const openMenu = () => {
+          sideDrawer.classList.remove("-translate-x-full");
+          menuOverlay.classList.remove("hidden");
+          document.body.style.overflow = "hidden";
+        };
+
+        const closeMenu = () => {
+          sideDrawer.classList.add("-translate-x-full");
+          menuOverlay.classList.add("hidden");
+          document.body.style.overflow = "";
+        };
+
+        openMenuButton.addEventListener("click", openMenu);
+        closeMenuButton.addEventListener("click", closeMenu);
+        menuOverlay.addEventListener("click", closeMenu);
+
+        const heroBg = document.getElementById("hero-bg");
+        const images = [
+          "./assets/images/hero-section-image.jpg",
+          "./assets/images/boat-in-a-lake.jpg",
+          "./assets/images/hot-air-balooning.jpg",
+        ];
+        let currentImageIndex = 0;
+
+        function changeBackgroundImage() {
+          currentImageIndex = (currentImageIndex + 1) % images.length;
+          heroBg.style.backgroundImage = `url('${images[currentImageIndex]}')`;
+        }
+
+        // Set the initial image
+        heroBg.style.backgroundImage = `url('${images[0]}')`;
+
+        // Change image every 5 seconds
+        setInterval(changeBackgroundImage, 5000);
+      });
+    </script>
+  </body>
+</html>
