@@ -19,6 +19,7 @@
       href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="./assets/css/custom.css" />
     <script>
       // Custom configuration for Tailwind CSS to match the design
       tailwind.config = {
@@ -46,7 +47,7 @@
             colors: {
               "brand-dark": "#302038",
               "brand-primary": "#FF5956",
-              "brand-grey": "#F7F2EE"
+              "brand-grey": "#F7F2EE",
             },
             backgroundImage: {
               "hero-pattern": "url('./assets/images/HeroSection.jpg')",
@@ -55,63 +56,6 @@
         },
       };
     </script>
-    <style>
-      body {
-        font-family: "Outfit", sans-serif;
-      }
-
-      /* Custom CSS for Animations */
-      @keyframes zoomIn {
-        from {
-          transform: scale(1);
-        }
-
-        to {
-          transform: scale(1.1);
-        }
-      }
-
-      .hero-bg-animate {
-        animation: zoomIn 10s ease-out infinite alternate;
-      }
-
-      @keyframes popUp {
-        from {
-          opacity: 0;
-          transform: translateY(30px);
-        }
-
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .hero-text-animate {
-        /* Staggering the animation with delays */
-        animation: popUp 0.8s ease-out forwards;
-      }
-
-      .hero-text-animate p {
-        opacity: 0;
-        animation: popUp 0.8s ease-out 0.3s forwards;
-      }
-
-      .hero-text-animate h1 {
-        opacity: 0;
-        animation: popUp 0.8s ease-out 0.6s forwards;
-      }
-
-      .hero-form-animate {
-        opacity: 0;
-        animation: popUp 0.8s ease-out 0.9s forwards;
-      }
-
-      /* Smooth transition for background image change */
-      .hero-section {
-        transition: background-image 1s ease-in-out;
-      }
-    </style>
   </head>
 
   <body class="bg-gray-100">
@@ -174,7 +118,7 @@
             <div class="flex items-center space-x-12">
               <!-- Logo -->
               <img
-                src="https://i.imgur.com/vJc25Vn.png"
+                src="./assets/images/voyagoLogo.png"
                 alt="Voyago Logo"
                 class="h-12"
               />
@@ -351,19 +295,21 @@
     ></div>
 
     <main>
-      <!-- The hero section with a container for the animated background -->
       <section
         id="hero"
-        class="hero-section relative h-screen overflow-hidden flex items-center justify-center text-white p-4"
+        class="hero-section relative h-screen flex items-center justify-center text-white p-4 z-10"
       >
-        <!-- The div below will have its background image changed by JavaScript -->
-        <div
-          id="hero-bg"
-          class="absolute inset-0 bg-cover bg-center hero-bg-animate"
-        ></div>
+        <!-- The overflow-hidden is now placed on the background image container itself,
+             which contains the zoom effect without clipping the main calendar. -->
+        <div class="absolute inset-0 overflow-hidden">
+          <div
+            id="hero-bg"
+            class="absolute inset-0 bg-cover bg-center hero-bg-animate"
+          ></div>
+        </div>
         <div class="absolute inset-0 bg-black opacity-40"></div>
 
-        <div class="relative z-10 text-center">
+        <div class="relative z-10 text-center w-full max-w-6xl">
           <div class="hero-text-animate">
             <p class="text-4xl font-light tracking-widest font-shadowsLight">
               Beauty and Discovery
@@ -375,138 +321,320 @@
 
           <!-- Booking Form -->
           <div
-            class="hero-form-animate bg-white text-gray-600 rounded-lg p-4 flex flex-col md:flex-row items-center md:space-x-4 w-full max-w-4xl mx-auto mt-8"
+            class="hero-form-animate bg-white text-gray-600 rounded-lg shadow-2xl flex flex-col lg:flex-row items-stretch w-full mx-auto mt-12"
           >
-            <div class="w-full md:flex-1 mb-4 md:mb-0 text-left p-2">
-              <label for="location" class="block text-xs text-gray-500"
-                >Location</label
-              >
-              <input
-                type="text"
-                id="location"
-                placeholder="Where To Next?"
-                class="w-full border-none focus:ring-0 p-0 text-base font-semibold"
-              />
-            </div>
+            <!-- On mobile, the form fields now stack vertically inside this container -->
             <div
-              class="w-full md:border-l md:border-gray-200 md:pl-4 md:flex-1 mb-4 md:mb-0 text-left p-2"
+              class="flex-grow grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4"
             >
-              <label for="type" class="block text-xs text-gray-500">Type</label>
-              <select
-                id="type"
-                class="w-full border-none focus:ring-0 p-0 bg-white text-base font-semibold"
+              <!-- Location Field -->
+              <div
+                class="flex items-center justify-between p-4 border-b lg:border-b-0 lg:border-r border-gray-200"
               >
-                <option>Booking Type</option>
-                <option>Adventure</option>
-                <option>Relaxation</option>
-                <option>Cultural</option>
-              </select>
-            </div>
-            <div
-              class="w-full md:border-l md:border-gray-200 md:pl-4 md:flex-1 mb-4 md:mb-0 text-left p-2"
-            >
-              <label for="date" class="block text-xs text-gray-500"
-                >Date From</label
-              >
-              <input
-                type="date"
-                id="date"
-                class="w-full border-none focus:ring-0 p-0 text-base font-semibold"
-              />
-            </div>
-            <div
-              class="w-full md:border-l md:border-gray-200 md:pl-4 flex items-center justify-between mb-4 md:mb-0 p-2"
-            >
-              <div class="text-left">
-                <label for="guests" class="block text-xs text-gray-500"
-                  >Guests</label
-                >
-                <span id="guests" class="font-semibold text-base">2</span>
+                <div class="custom-select-wrapper w-full text-left relative">
+                  <label class="block text-sm text-gray-500">Location</label>
+                  <div class="custom-select-trigger cursor-pointer">
+                    <span class="text-base font-semibold">Where To Next?</span>
+                    <input type="hidden" name="location" value="" />
+                  </div>
+                  <ul
+                    class="custom-select-options hidden absolute z-10 mt-2 w-full bg-white border border-gray-200 rounded-md shadow-lg max-h-48 overflow-y-auto"
+                  >
+                    <li
+                      class="p-2 hover:bg-brand-primary hover:text-white cursor-pointer"
+                      data-value="paris"
+                    >
+                      Paris, France
+                    </li>
+                    <li
+                      class="p-2 hover:bg-brand-primary hover:text-white cursor-pointer"
+                      data-value="kyoto"
+                    >
+                      Kyoto, Japan
+                    </li>
+                  </ul>
+                </div>
+                <i class="fas fa-map-marker-alt text-gray-400 text-xl ml-4"></i>
               </div>
-              <div class="flex items-center space-x-2 ml-4">
-                <button
-                  class="bg-gray-200 w-6 h-6 rounded-full flex items-center justify-center"
+
+              <!-- Type Field -->
+              <div
+                class="flex items-center justify-between p-4 border-b lg:border-b-0 lg:border-r border-gray-200"
+              >
+                <div class="custom-select-wrapper w-full text-left relative">
+                  <label class="block text-sm text-gray-500">Type</label>
+                  <div class="custom-select-trigger cursor-pointer">
+                    <span class="text-base font-semibold">Booking Type</span>
+                    <input type="hidden" name="type" value="" />
+                  </div>
+                  <ul
+                    class="custom-select-options hidden absolute z-10 mt-2 w-full bg-white border border-gray-200 rounded-md shadow-lg max-h-48 overflow-y-auto"
+                  >
+                    <li
+                      class="p-2 hover:bg-brand-primary hover:text-white cursor-pointer"
+                      data-value="adventure"
+                    >
+                      Adventure
+                    </li>
+                    <li
+                      class="p-2 hover:bg-brand-primary hover:text-white cursor-pointer"
+                      data-value="beach"
+                    >
+                      Beach
+                    </li>
+                  </ul>
+                </div>
+                <i class="fas fa-hiking text-gray-400 text-xl ml-4"></i>
+              </div>
+
+              <!-- Date From Field -->
+              <div
+                id="date-picker-trigger"
+                class="relative flex items-center justify-between p-4 border-b lg:border-b-0 lg:border-r border-gray-200 cursor-pointer"
+              >
+                <div class="text-left w-full">
+                  <label class="block text-sm text-gray-500">Date From</label>
+                  <span id="date-display" class="text-base font-semibold"
+                    >Select Date</span
+                  >
+                </div>
+                <i class="fas fa-calendar-alt text-gray-400 text-xl ml-4"></i>
+
+                <!-- 
+                            FIX 2: SIMPLIFIED responsive width for the calendar.
+                            - 'w-full' lets it fill the width of its parent (the date field). On mobile, this is correct.
+                            - 'lg:w-[32rem]' restores the fixed width on large screens.
+                            This is a more robust way to handle the responsive width.
+                        -->
+                <div
+                  id="date-picker-container"
+                  class="date-picker-container absolute left-0 top-full mt-2 w-full lg:w-[32rem] bg-white rounded-lg border border-gray-200 p-4 z-20 hidden transform scale-95 opacity-0"
                 >
-                  -
-                </button>
-                <button
-                  class="bg-gray-200 w-6 h-6 rounded-full flex items-center justify-center"
-                >
-                  +
-                </button>
+                  <div
+                    id="calendars-container"
+                    class="flex flex-col sm:flex-row justify-around"
+                  ></div>
+                  <div
+                    class="flex flex-col sm:flex-row justify-between items-center mt-4 pt-4 border-t border-gray-200 gap-4"
+                  >
+                    <span
+                      id="date-range-display"
+                      class="text-sm text-gray-600"
+                    ></span>
+                    <div class="flex space-x-2">
+                      <button
+                        id="cancel-date-btn"
+                        class="px-4 py-2 bg-brand-dark text-white rounded-md text-sm"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        id="apply-date-btn"
+                        class="px-4 py-2 bg-brand-primary text-white rounded-md text-sm"
+                      >
+                        Apply
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Guests Field -->
+              <div class="flex items-center justify-between p-4">
+                <div class="text-left">
+                  <label class="block text-sm text-gray-500">Guests</label>
+                  <input
+                    type="number"
+                    id="guests-input"
+                    class="font-semibold text-base w-12 border-none focus:ring-0 p-0"
+                    value="2"
+                    min="1"
+                  />
+                </div>
+                <div class="flex items-center space-x-3 text-gray-400">
+                  <button id="decrement-guests">
+                    <i class="fas fa-minus-circle text-gray-500"></i>
+                  </button>
+                  <button id="increment-guests">
+                    <i class="fas fa-plus-circle text-gray-500"></i>
+                  </button>
+                  <div class="border-l h-6 border-gray-200"></div>
+                  <i class="fas fa-sliders-h cursor-pointer"></i>
+                </div>
               </div>
             </div>
+
+            <!-- On mobile, the button now stacks below the form fields -->
             <button
-              class="bg-brand-primary text-white w-full md:w-auto px-6 py-6 rounded-lg hover:bg-red-600"
+              class="bg-brand-primary text-white px-8 py-4 lg:py-0 rounded-b-lg lg:rounded-r-lg lg:rounded-bl-none hover:bg-red-600 transition-colors"
             >
-              <i class="fas fa-search text-xl"></i>
+              <i class="fas fa-search text-2xl"></i>
             </button>
           </div>
         </div>
+      </section>
 
-        <!-- Slider Arrows -->
-        <button
-          class="group absolute left-4 top-1/2 transform -translate-y-1/2 p-3 rounded-full border-2 border-white/40 text-white hover:border-white hover:text-white transition hidden md:block"
-        >
-          <i
-            class="fas fa-arrow-left opacity-60 group-hover:opacity-100 transition"
-          ></i>
-        </button>
+      <!-- ======================================================= -->
+      <!-- ============== Destination List Section =============== -->
+      <!-- ======================================================= -->
+      <section class="py-24 bg-white">
+        <div class="container mx-auto px-4 max-w-7xl">
+          <!-- Grid container for the destination cards -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- 1. Title Block -->
+            <div class="flex flex-col justify-center lg:pr-8 mb-8 lg:mb-0">
+              <p class="text-brand-primary font-semibold tracking-widest mb-2">
+                DESTINATION LIST
+              </p>
+              <h2 class="text-4xl font-bold text-brand-dark leading-tight">
+                Explore the Beautiful Places Around the World
+              </h2>
+            </div>
 
-        <button
-          class="group absolute right-4 top-1/2 transform -translate-y-1/2 p-3 rounded-full border-2 border-white/40 text-white hover:border-white hover:text-white transition hidden md:block"
-        >
-          <i
-            class="fas fa-arrow-right opacity-60 group-hover:opacity-100 transition"
-          ></i>
-        </button>
+            <!-- 2. Spain Card (Rectangle) -->
+            <div class="group relative rounded-2xl overflow-hidden h-72">
+              <img
+                src="./assets/images/spain-cliffs.jpg"
+                alt="Cliffs of Spain"
+                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-in-out"
+              />
+              <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+              <div
+                class="absolute inset-0 flex flex-col items-center justify-end p-8 text-white text-center"
+              >
+                <!-- Added tour-count-btn class and removed hover: classes -->
+                <span
+                  class="tour-count-btn bg-brand-primary text-white px-3 py-1 rounded-md text-xs font-semibold inline-block transition-all duration-700 transform translate-x-6 group-hover:translate-x-0 cursor-pointer"
+                  >8 TOURS</span
+                >
+                <h3
+                  class="text-2xl font-bold mt-2 destination-name cursor-pointer"
+                >
+                  Spain
+                </h3>
+              </div>
+            </div>
+
+            <!-- 3. Thailand Card (Wide Rectangle) -->
+            <div
+              class="group relative rounded-2xl overflow-hidden md:col-span-2 h-72"
+            >
+              <img
+                src="./assets/images/thailand-mountains.jpg"
+                alt="Woman taking photo in Thailand mountains"
+                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-in-out"
+              />
+              <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+              <div
+                class="absolute inset-0 flex flex-col items-center justify-end p-8 text-white text-center"
+              >
+                <!-- Added tour-count-btn class and removed hover: classes -->
+                <span
+                  class="tour-count-btn bg-brand-primary text-white px-3 py-1 rounded-md text-xs font-semibold inline-block transition-all duration-700 transform translate-x-8 group-hover:translate-x-0 cursor-pointer"
+                  >7 TOURS</span
+                >
+                <h3
+                  class="text-2xl font-bold mt-2 destination-name cursor-pointer"
+                >
+                  Thailand
+                </h3>
+              </div>
+            </div>
+
+            <!-- 4. Dubai Card (Circle) -->
+            <div
+              class="group relative rounded-full overflow-hidden w-full h-0 pb-[100%]"
+            >
+              <img
+                src="./assets/images/camping-in-tent.jpg"
+                alt="Camping tents in the mountains"
+                class="absolute w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-in-out"
+              />
+              <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+              <div
+                class="absolute inset-0 flex flex-col items-center justify-end p-8 text-white text-center"
+              >
+                <!-- Added tour-count-btn class and removed hover: classes -->
+                <span
+                  class="tour-count-btn bg-brand-primary text-white px-3 py-1 rounded-md text-xs font-semibold inline-block transition-all duration-700 transform translate-x-6 group-hover:translate-x-0 cursor-pointer"
+                  >6 TOURS</span
+                >
+                <h3
+                  class="text-2xl font-bold mt-2 destination-name cursor-pointer"
+                >
+                  Dubai
+                </h3>
+              </div>
+            </div>
+
+            <!-- 5. Australia Card (Rectangle) -->
+            <div class="group relative rounded-2xl overflow-hidden h-72">
+              <img
+                src="./assets/images/mountain-side-lake.jpg"
+                alt="Wooden pier in Australia"
+                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-in-out"
+              />
+              <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+              <div
+                class="absolute inset-0 flex flex-col items-center justify-end p-8 text-white text-center"
+              >
+                <!-- Added tour-count-btn class and removed hover: classes -->
+                <span
+                  class="tour-count-btn bg-brand-primary text-white px-3 py-1 rounded-md text-xs font-semibold inline-block transition-all duration-700 transform translate-x-8 group-hover:translate-x-0 cursor-pointer"
+                  >13 TOURS</span
+                >
+                <h3
+                  class="text-2xl font-bold mt-2 destination-name cursor-pointer"
+                >
+                  Australia
+                </h3>
+              </div>
+            </div>
+
+            <!-- 6. Italy Card (Circle) -->
+            <div
+              class="group relative rounded-full overflow-hidden w-full h-0 pb-[100%]"
+            >
+              <img
+                src="./assets/images/boating-around-islands.jpg"
+                alt="Person looking over a lake in Italy"
+                class="absolute w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-in-out"
+              />
+              <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+              <div
+                class="absolute inset-0 flex flex-col items-center justify-end p-8 text-white text-center"
+              >
+                <!-- Added tour-count-btn class and removed hover: classes -->
+                <span
+                  class="tour-count-btn bg-brand-primary text-white px-3 py-1 rounded-md text-xs font-semibold inline-block transition-all duration-700 transform translate-x-6 group-hover:translate-x-0 cursor-pointer"
+                  >2 TOURS</span
+                >
+                <h3
+                  class="text-2xl font-bold mt-2 destination-name cursor-pointer"
+                >
+                  Italy
+                </h3>
+              </div>
+            </div>
+
+            <!-- 7. Deals Card -->
+            <div
+              class="deals-card bg-brand-primary rounded-2xl text-white p-8 flex flex-col justify-center items-center text-center"
+            >
+              <p class="font-shadowsLight text-3xl">20% Off</p>
+              <h3 class="font-bold text-3xl mt-2">Summer Hottest Deals</h3>
+              <a
+                href="#"
+                class="view-deals-btn bg-white text-brand-primary font-semibold px-6 py-2 rounded-lg mt-6"
+              >
+                View Deals
+              </a>
+            </div>
+          </div>
+        </div>
       </section>
     </main>
 
-    <script>
-      // Hero section image slideshow
-      document.addEventListener("DOMContentLoaded", function () {
-        // Mobile Menu Drawer Logic
-        const openMenuButton = document.getElementById("open-menu-button");
-        const closeMenuButton = document.getElementById("close-menu-button");
-        const sideDrawer = document.getElementById("side-drawer");
-        const menuOverlay = document.getElementById("menu-overlay");
-
-        const openMenu = () => {
-          sideDrawer.classList.remove("-translate-x-full");
-          menuOverlay.classList.remove("hidden");
-          document.body.style.overflow = "hidden";
-        };
-
-        const closeMenu = () => {
-          sideDrawer.classList.add("-translate-x-full");
-          menuOverlay.classList.add("hidden");
-          document.body.style.overflow = "";
-        };
-
-        openMenuButton.addEventListener("click", openMenu);
-        closeMenuButton.addEventListener("click", closeMenu);
-        menuOverlay.addEventListener("click", closeMenu);
-
-        const heroBg = document.getElementById("hero-bg");
-        const images = [
-          "./assets/images/hero-section-image.jpg",
-          "./assets/images/boat-in-a-lake.jpg",
-          "./assets/images/hot-air-balooning.jpg",
-        ];
-        let currentImageIndex = 0;
-
-        function changeBackgroundImage() {
-          currentImageIndex = (currentImageIndex + 1) % images.length;
-          heroBg.style.backgroundImage = `url('${images[currentImageIndex]}')`;
-        }
-
-        // Set the initial image
-        heroBg.style.backgroundImage = `url('${images[0]}')`;
-
-        // Change image every 5 seconds
-        setInterval(changeBackgroundImage, 5000);
-      });
-    </script>
+    <script src="./assets/js/script.js"></script>
   </body>
 </html>

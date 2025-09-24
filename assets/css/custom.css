@@ -1,0 +1,191 @@
+body {
+  font-family: "Outfit", sans-serif;
+}
+
+/* Custom CSS for Animations */
+@keyframes zoomIn {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.1);
+  }
+}
+
+.hero-bg-animate {
+  animation: zoomIn 10s ease-out infinite alternate;
+}
+
+@keyframes popUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-text-animate {
+  /* Staggering the animation with delays */
+  animation: popUp 0.8s ease-out forwards;
+}
+
+.hero-text-animate p {
+  opacity: 0;
+  animation: popUp 0.8s ease-out 0.3s forwards;
+}
+
+.hero-text-animate h1 {
+  opacity: 0;
+  animation: popUp 0.8s ease-out 0.6s forwards;
+}
+
+.hero-form-animate {
+  opacity: 0;
+  animation: popUp 0.8s ease-out 0.9s forwards;
+}
+
+/* Smooth transition for background image change */
+.hero-section {
+  transition: background-image 1s ease-in-out;
+}
+/* Custom styles for the dropdown */
+.custom-select-options {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #ff5956 #f1f1f1;
+}
+
+/* Custom scrollbar for Webkit browsers (Chrome, Safari) */
+.custom-select-options::-webkit-scrollbar {
+  width: 8px;
+}
+.custom-select-options::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+.custom-select-options::-webkit-scrollbar-thumb {
+  background: #ff5956;
+  border-radius: 10px;
+}
+.custom-select-options::-webkit-scrollbar-thumb:hover {
+  background: #e04a48;
+}
+
+/* Hide default arrows on number input */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+}
+
+/* New CSS for Destination Card Animations */
+
+/* --- UPDATE THIS SECTION IN YOUR CSS --- */
+
+/* For the destination name underline effect - NOW TRIGGERS ON TEXT HOVER */
+.destination-name {
+    position: relative;
+    display: inline-block;
+}
+
+.destination-name::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: white;
+    transition: width 0.3s ease-in;
+}
+
+.destination-name:hover::after {
+    width: 100%;
+}
+
+/* For the Deals Card ripple effect (No changes here) */
+.deals-card {
+    position: relative;
+    overflow: hidden;
+}
+.deals-card:hover::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: ripple 0.6s ease-out;
+}
+@keyframes ripple {
+    to {
+        width: 400px;
+        height: 400px;
+        opacity: 0;
+    }
+}
+
+/* For the View Deals button background animation (No changes here) */
+.view-deals-btn {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    transition: color 0.3s ease-in !important; /* !important to override tailwind */
+}
+.view-deals-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease-in;
+    z-index: -1;
+}
+.view-deals-btn:hover::before {
+    transform: translateY(0);
+}
+.view-deals-btn:hover {
+    color: #FF5956; /* The hover text color (brand-primary) */
+}
+
+/* --- ADD THIS NEW SECTION TO YOUR CSS --- */
+
+/* NEW: For the Tour Numbers button animation */
+.tour-count-btn {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    /* transition: color 0.3s ease-in !important; */
+}
+.tour-count-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white; /* The hover background color */
+    transform: translateY(-100%);
+    transition: transform 0.3s ease-in;
+    z-index: -1;
+}
+.tour-count-btn:hover::before {
+    transform: translateY(0);
+}
+.tour-count-btn:hover {
+    color: #FF5956; /* The hover text color (brand-primary) */
+}
